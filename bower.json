@@ -1,0 +1,21 @@
+{
+  "name": "bike_app",
+  "description": "",
+  "main": "index.html",
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "bootstrap": "^3.3.7"
+  },
+  "authors": [
+    "Matt Carlson James Turello"
+  ]
+}
