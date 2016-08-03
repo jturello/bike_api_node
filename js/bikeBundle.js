@@ -9,6 +9,25 @@ BikeBundle.prototype.getBikeYear = function(timestamp) {
   return month + "/" + day + "/" + year;
 }
 
+BikeBundle.prototype.compareCities = function(city1, city2) {
+  var city1Stolen;
+  var city2Stolen;
+  $.get('https://bikeindex.org:443/api/v2/bikes_search/count?proximity=' + city1 + '&proximity_square=100&access_token=date_stolen').then(function(response1) {
+    console.log(response1.proximity);
+    city1Stolen = response1.proximity;
+    $.get('https://bikeindex.org:443/api/v2/bikes_search/count?proximity=' + city2 + '&proximity_square=100&access_token=date_stolen').then(function(response2) {
+      console.log(response2.proximity)
+      city2Stolen = response2.proximity;
+      $('.showBikes').prepend(city1 + " has " + city1Stolen + " stolen bikes and " + city2 + " has " + city2Stolen + " stolen bikes.");
+    }).fail(function(error) {
+      $('.showBikes').prepend(error.responseJSON.message);
+    });
+  }).fail(function(error) {
+    $('.showBikes').prepend(error.responseJSON.message);
+  });
+
+}
+
 BikeBundle.prototype.getBikes = function(color, location) {
   $.get('https://bikeindex.org:443/api/v2/bikes_search/stolen?page=1&colors=' + color + '&proximity=' + location + '&proximity_square=100').then(function(response) {
 
