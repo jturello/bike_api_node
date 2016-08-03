@@ -7,7 +7,7 @@ BikeBundle.prototype.getBikeYear = function(timestamp) {
   var day = date.getDate();
   var year = date.getFullYear();
   return month + "/" + day + "/" + year;
-}
+};
 
 BikeBundle.prototype.compareCities = function(city1, city2) {
   var city1Stolen;
@@ -24,7 +24,7 @@ BikeBundle.prototype.compareCities = function(city1, city2) {
     $('.cityResults').html(error.responseJSON.message);
   });
 
-}
+};
 
 BikeBundle.prototype.getBikes = function(color, location) {
   $.get('https://bikeindex.org:443/api/v2/bikes_search/stolen?page=1&colors=' + color + '&proximity=' + location + '&proximity_square=100').then(function(response) {
@@ -37,11 +37,13 @@ BikeBundle.prototype.getBikes = function(color, location) {
       var year = date.getFullYear();
       var dateString = month + "/" + day + "/" + year;
 
-      if (response.bikes[i].thumb == null) {
-        var image = "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/glossy-black-icons-transport-travel/038400-glossy-black-icon-transport-travel-transportation-bicycle.png";
+      var image;
+
+      if (response.bikes[i].thumb === null) {
+       image = "http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/glossy-black-icons-transport-travel/038400-glossy-black-icon-transport-travel-transportation-bicycle.png";
       }
       else {
-        var image = response.bikes[i].thumb;
+        image = response.bikes[i].thumb;
       }
 
       var bikeTitle = response.bikes[i].title;
@@ -61,7 +63,7 @@ BikeBundle.prototype.getBikes = function(color, location) {
   }).fail(function(error) {
     $('.showBikes').html(error.responseJSON.message);
   });
-}
+};
 
 exports.bikesModule = BikeBundle;
 
