@@ -45,6 +45,7 @@ BikeBundle.prototype.getBikes = function(color, location) {
       }
 
       var bikeTitle = response.bikes[i].title;
+      var bikeId = response.bikes[i].id;
 
       $('.showBikes').prepend(
         "<div class=\"card\">" +
@@ -52,7 +53,7 @@ BikeBundle.prototype.getBikes = function(color, location) {
         "<div class=\"card-block\">" +
           "<h4 class=\"card-title\">" + bikeTitle + "</h4>" +
           "<p class=\"card-text\"> This bike was stolen on: " + dateString + "</p>" +
-          "<a href=\"#\" class=\"btn btn-primary\">Go somewhere</a>" +
+          "<a target = \"_blank\" href=\"https://bikeindex.org/bikes/" + bikeId + "\" class=\"btn btn-primary\">View this Bike</a>" +
         "</div>" +
       "</div>"
       );
