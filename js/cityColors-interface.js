@@ -2,10 +2,9 @@ var BikeBundle = require('./../js/bikeBundle.js').bikesModule;
 
 $(document).ready(function() {
   var currentBikeObject = new BikeBundle();
-  $('#ColorLocationSearch').click(function() {
+  $('#colorsInCity').click(function() {
     $("#output").empty();
-    var color = $('#color').val();
-    var location = $('#location').val();
-    currentBikeObject.getBikes(color, location);
+    var city = $("#cityName").val();
+    $("#output").prepend(currentBikeObject.compareColors(city));
   });
 });
