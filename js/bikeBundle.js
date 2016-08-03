@@ -27,12 +27,11 @@ BikeBundle.prototype.getBikes = function(color, location) {
         var image = response.bikes[i].thumb;
       }
 
-
       var bikeTitle = response.bikes[i].title;
 
       $('.showBikes').prepend(
         "<div class=\"card\">" +
-        "<img class=\"card-img-top\" src=\"" + image + "\" alt=\"Card image cap\" style=\"height: 250px; display: block;\">" +
+        "<img class=\"card-img-top\" src=\"" + image + "\" alt=\"Card image cap\" style=\"height: 300px; display: block;\">" +
         "<div class=\"card-block\">" +
           "<h4 class=\"card-title\">" + bikeTitle + "</h4>" +
           "<p class=\"card-text\"> This bike was stolen on: " + dateString + "</p>" +
