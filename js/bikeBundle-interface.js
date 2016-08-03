@@ -1,7 +1,7 @@
-var Bike = require('./../js/bike.js').bikesModule;
+var BikeBundle = require('./../js/bikeBundle.js').bikesModule;
 
 $(document).ready(function() {
-  var currentBikeObject = new Bike();
+  var currentBikeObject = new BikeBundle();
   $('#ColorLocationSearch').click(function() {
     var color = $('#color').val();
     var location = $('#location').val();
