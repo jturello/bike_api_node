@@ -12,26 +12,29 @@ BikeBundle.prototype.getBikeYear = function(timestamp) {
 BikeBundle.prototype.getBikes = function(color, location) {
   $.get('https://bikeindex.org:443/api/v2/bikes_search/stolen?page=1&colors=' + color + '&proximity=' + location + '&proximity_square=100').then(function(response) {
 
-    var date = new Date(response.bikes[0].date_stolen);
-    var month = (date.getMonth() + 1);
-    var day = date.getDate();
-    var year = date.getFullYear();
-    var dateString = month + "/" + day + "/" + year;
+    for (var i = 0; i < response.bikes.length; i++) {
 
-    var image = response.bikes[0].thumb;
+      var date = new Date(response.bikes[i].date_stolen * 1000);
+      var month = (date.getMonth() + 1);
+      var day = date.getDate();
+      var year = date.getFullYear();
+      var dateString = month + "/" + day + "/" + year;
 
-    var bikeTitle = response.bikes[0].title;
+      var image = response.bikes[i].thumb;
 
-    $('.showBikes').prepend(
-      "<div class=\"card\">" +
-      "<img class=\"card-img-top\" src=\"" + image + "\" alt=\"Card image cap\">" +
-      "<div class=\"card-block\">" +
-        "<h4 class=\"card-title\">" + bikeTitle + "</h4>" +
-        "<p class=\"card-text\"> This bike was stolen on: " + dateString + "</p>" +
-        "<a href=\"#\" class=\"btn btn-primary\">Go somewhere</a>" +
-      "</div>" +
-    "</div>"
-    );
+      var bikeTitle = response.bikes[i].title;
+
+      $('.showBikes').prepend(
+        "<div class=\"card\">" +
+        "<img class=\"card-img-top\" src=\"" + image + "\" alt=\"Card image cap\">" +
+        "<div class=\"card-block\">" +
+          "<h4 class=\"card-title\">" + bikeTitle + "</h4>" +
+          "<p class=\"card-text\"> This bike was stolen on: " + dateString + "</p>" +
+          "<a href=\"#\" class=\"btn btn-primary\">Go somewhere</a>" +
+        "</div>" +
+      "</div>"
+      );
+    }
   }).fail(function(error) {
     $('.showBikes').prepend(error.responseJSON.message);
   });
