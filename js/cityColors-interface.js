@@ -5,6 +5,7 @@ $(document).ready(function() {
   $('#colorsInCity').click(function() {
     $("#output").empty();
     var city = $("#cityName").val();
-    $("#output").prepend(currentBikeObject.compareColors(city));
+    var colors = $('#colors').val().split(',');
+    $("#output").prepend(currentBikeObject.compareColors(city, colors));
   });
 });
