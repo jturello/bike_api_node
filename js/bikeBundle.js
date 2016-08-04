@@ -10,17 +10,15 @@ BikeBundle.prototype.getBikeYear = function(timestamp) {
 };
 
 BikeBundle.prototype.compareColors = function(city) {
-  var colors = ['red', 'blue', 'black'];
-  // var colors = [{color: 'red', done: false, responses: []}, {color: 'blue', done: false, responses: []}, {color: 'black', done: false, responses: []},]
-  // var responses = [];
-  var responseString = 'In ' + city + ' there are: ';
+  var colors = ['red', 'blue', 'black', 'green', 'pink'];
+  var responseString = "<h2>In " + city + " there are: </h2>";
   var done = colors.length;
 
   $(colors).each(function() {
     var color = this;
     $.get("https://bikeindex.org:443/api/v2/bikes_search/count?colors=" + color +  "&proximity=" + city + "&proximity_square=100&access_token=date_stolen").then(function(response) {
       var num_stolen = response.proximity;
-      responseString += response.proximity + " stolen " + color + " bikes ";
+      responseString += "<li class='list-group-item'>" + response.proximity + " stolen " + color + " bikes </li>";
       done -= 1;
       if(done === 0){
         $('#output').prepend(responseString);
@@ -28,27 +26,7 @@ BikeBundle.prototype.compareColors = function(city) {
     }).fail(function(error) {
           $('#output').prepend(error.responseJSON.message);
         });
-    // get all bikes of iterator.color
-    // loop through and inside loop push into iterator.responses
-    // and also inside loop set iterator.done to true
   });
-
-  // for (i = 0; i < colors.length; i++) {
-  //   (function (i) {
-  //     $.get("https://bikeindex.org:443/api/v2/bikes_search/count?colors=" + colors[i] +  "&proximity=" + city + "&proximity_square=100&access_token=date_stolen").then(function(response) {
-  //       console.log(response.proximity);
-  //       responses.push(response.proximity);
-  //       console.log(responses)
-  //       responseString += response.proximity + " stolen " + colors[i] + " bikes "
-  //       console.log(responseString)
-  //     }).fail(function(error) {
-  //       $('#output').prepend(error.responseJSON.message);
-  //     });
-  //   })(i);
-  // }
-
-  // console.log(responseString);
-
 };
 
 BikeBundle.prototype.compareCities = function(city1, city2) {
