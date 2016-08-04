@@ -17,7 +17,9 @@
     </style>
   </head>
   <body>
+
     <div id="map"></div>
+
     <script>
 
       var map;
@@ -38,10 +40,10 @@
           }
         });
 
-        var bikeIds = []
-        var bikeVars = []
+        var bikeIds = [];
+        var bikeVars = [];
 
-        $.get('https://bikeindex.org:443/api/v2/bikes_search/stolen?page=1&proximity=' + city + ' ' + state + '&proximity_square=100').then(function(response) {
+        $.get('https://bikeindex.org:443/api/v2/bikes_search/stolen?page=1&proximity=' + city + ', ' + state + '&proximity_square=100').then(function(response) {
           for (var i = 0; i < response.bikes.length; i++) {
             bikeIds.push(response.bikes[i].id);
           }
