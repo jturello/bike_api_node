@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="build/js/vendor.min.js"></script>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var bikeIds = []
+      var bikeVars = []
+
+      $.get('https://bikeindex.org:443/api/v2/bikes_search/stolen?page=1&proximity=Portland%2C%20OR&proximity_square=100').then(function(response) {
+        for (var i = 0; i < response.bikes.length; i++) {
+          bikeIds.push(response.bikes[i].id);
+        }
+      }).then(function() {
+        console.log(bikeIds);
+        $(bikeIds).each(function() {
+          var bikeId = this;
+          console.log(bikeId);
+          $.get('https://bikeindex.org:443/api/v2/bikes/' + bikeId).then(function(response) {
+            console.log(response.bike.stolen_record.latitude);
+            console.log(response.bike.stolen_record.longitude);
+          })
+        })
+
+        // $(bikeIds).each(function() {
+        //   var bikeId = this;
+        //   $.get('https://bikeindex.org:443/api/v2/bikes/' + bikeId).then(function(response) {
+        //     bikeVars.push({response.bike.stolen_record.latitude, resopnse.bike.stolen_record.longitude});
+        //   })
+        // })
+      });
+      console.log(bikeIds);
+
+
+
+      var map;
+      function initMap() {
+        var bike1 = {lat: 45.5051028, lng: -122.6357722};
+        var bike2 = {lat: 45.494017, lng: -122.6563635};
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 45.5231, lng: -122.6765},
+          zoom: 10
+        });
+
+        var marker1 = new google.maps.Marker({
+          map: map,
+          position: bike1,
+          title: 'Stolen Bike 1'
+        });
+
+        var marker2 = new google.maps.Marker({
+          map: map,
+          position: bike2,
+          title: 'Stolen Bike 2'
+        });
+
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1sF84XPWldnIBexvFovz7gKW1jTlpJNI&callback=initMap"
+    async defer></script>
+  </body>
+</html>
