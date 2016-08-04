@@ -19,34 +19,6 @@
   <body>
     <div id="map"></div>
     <script>
-      var bikeIds = []
-      var bikeVars = []
-
-      $.get('https://bikeindex.org:443/api/v2/bikes_search/stolen?page=1&proximity=Portland%2C%20OR&proximity_square=100').then(function(response) {
-        for (var i = 0; i < response.bikes.length; i++) {
-          bikeIds.push(response.bikes[i].id);
-        }
-      }).then(function() {
-        console.log(bikeIds);
-        $(bikeIds).each(function() {
-          var bikeId = this;
-          console.log(bikeId);
-          $.get('https://bikeindex.org:443/api/v2/bikes/' + bikeId).then(function(response) {
-            console.log(response.bike.stolen_record.latitude);
-            console.log(response.bike.stolen_record.longitude);
-          })
-        })
-
-        // $(bikeIds).each(function() {
-        //   var bikeId = this;
-        //   $.get('https://bikeindex.org:443/api/v2/bikes/' + bikeId).then(function(response) {
-        //     bikeVars.push({response.bike.stolen_record.latitude, resopnse.bike.stolen_record.longitude});
-        //   })
-        // })
-      });
-      console.log(bikeIds);
-
-
 
       var map;
       function initMap() {
@@ -58,18 +30,25 @@
           zoom: 10
         });
 
-        var marker1 = new google.maps.Marker({
-          map: map,
-          position: bike1,
-          title: 'Stolen Bike 1'
-        });
+        var bikeIds = []
+        var bikeVars = []
 
-        var marker2 = new google.maps.Marker({
-          map: map,
-          position: bike2,
-          title: 'Stolen Bike 2'
+        $.get('https://bikeindex.org:443/api/v2/bikes_search/stolen?page=1&proximity=Portland%2C%20OR&proximity_square=100').then(function(response) {
+          for (var i = 0; i < response.bikes.length; i++) {
+            bikeIds.push(response.bikes[i].id);
+          }
+        }).then(function() {
+          $(bikeIds).each(function() {
+            var bikeId = this;
+            $.get('https://bikeindex.org:443/api/v2/bikes/' + bikeId).then(function(response) {
+              bikeId = new google.maps.Marker({
+                position: new google.maps.LatLng(response.bike.stolen_record.latitude, response.bike.stolen_record.longitude),
+                map: map,
+                title: 'sampleMarker'
+              });
+            });
+          });
         });
-
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1sF84XPWldnIBexvFovz7gKW1jTlpJNI&callback=initMap"
